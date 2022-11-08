@@ -36,6 +36,7 @@ function run() {
 run();
 
 
+// services api with limit 
 app.get("/services", async (req, res) => {
     try {
         const query = {}
@@ -49,6 +50,27 @@ app.get("/services", async (req, res) => {
 
     } catch (error) {
 
+        res.send({
+            success: false,
+            error: error.message
+        })
+    }
+})
+
+// create services api without limit 
+app.get("/allServices", async (req, res) => {
+    try {
+
+        const query = {}
+        const cursor = servicesCollection.find(query)
+        const allServices = await cursor.toArray()
+        res.send({
+            success: true,
+            message: "Successfully loaded",
+            data: allServices
+        })
+
+    } catch (error) {
         res.send({
             success: false,
             error: error.message
