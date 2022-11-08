@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.b6qirvs.mongodb.net/?retryWrites=true&w=majority`;
 console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -77,6 +77,29 @@ app.get("/allServices", async (req, res) => {
         })
     }
 })
+
+app.get("/allServices/:id", async (req, res) => {
+    try {
+
+        const id = req.params.id
+        const query = { _id: ObjectId(id) }
+        const service = await servicesCollection.findOne(query)
+        res.send({
+            success: true,
+            message: "Successfully loaded",
+            data: service
+        })
+
+    } catch (error) {
+
+        res.send({
+            success: false,
+            error: error.message
+        })
+
+    }
+})
+
 
 
 app.get("/", (req, res) => {
