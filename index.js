@@ -186,6 +186,29 @@ app.delete("/review/:id", async (req, res) => {
     }
 })
 
+// create api for updating review 
+app.patch("/review/:id", async (req, res) => {
+    try {
+
+        const id = req.params.id
+        let review = req.body.review
+        const query = { _id: ObjectId(id) }
+        const updatedDoc = {
+            $set: {
+                review: review
+            }
+        }
+        const result = await reviewCollection.updateOne(query, updatedDoc)
+        res.send(result)
+
+    } catch (error) {
+        res.send({
+            success: false, 
+            error: error.message
+        })
+    }
+})
+
 app.get("/", (req, res) => {
     res.send("App is running")
 })
