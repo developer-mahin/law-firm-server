@@ -101,7 +101,7 @@ app.get("/allServices/:id", async (req, res) => {
     }
 })
 
-
+// Create review
 app.post("/review", async (req, res) => {
     try {
 
@@ -122,7 +122,7 @@ app.post("/review", async (req, res) => {
     }
 })
 
-
+// get specific reviews at the specific service
 app.get("/review/:id", async (req, res) => {
     try {
 
@@ -144,6 +144,18 @@ app.get("/review/:id", async (req, res) => {
     }
 })
 
+// get specific reviews at the specific email or user 
+app.get("/review", async (req, res) => {
+    let query = {}
+    if (req.query.email) {
+        query = {
+            email: req.query.email
+        }
+    }
+    const cursor = reviewCollection.find(query)
+    const review = await cursor.toArray()
+    res.send(review)
+})
 
 
 
