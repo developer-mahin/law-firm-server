@@ -21,7 +21,7 @@ console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const servicesCollection = client.db("law-firm").collection("services")
-
+const reviewCollection = client.db("law-firm").collection("review")
 
 function run() {
     try {
@@ -78,6 +78,7 @@ app.get("/allServices", async (req, res) => {
     }
 })
 
+// create api to find a specific service details
 app.get("/allServices/:id", async (req, res) => {
     try {
 
@@ -100,6 +101,26 @@ app.get("/allServices/:id", async (req, res) => {
     }
 })
 
+
+app.post("/review", async (req, res) => {
+    try {
+
+        const query = req.body;
+        console.log(query);
+        const review = await reviewCollection.insertOne(query)
+        res.send({
+            success: true,
+            message: "successfully added review",
+            data: review
+        })
+
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message
+        })
+    }
+})
 
 
 app.get("/", (req, res) => {
