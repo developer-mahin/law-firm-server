@@ -123,6 +123,30 @@ app.post("/review", async (req, res) => {
 })
 
 
+app.get("/review/:id", async (req, res) => {
+    try {
+
+        const id = req.params.id
+        const query = { productId: id }
+        const cursor = await reviewCollection.find(query).toArray()
+
+        res.send({
+            success: true,
+            message: "Successfully loaded",
+            data: cursor
+        })
+
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message
+        })
+    }
+})
+
+
+
+
 app.get("/", (req, res) => {
     res.send("App is running")
 })
