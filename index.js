@@ -146,18 +146,45 @@ app.get("/review/:id", async (req, res) => {
 
 // get specific reviews at the specific email or user 
 app.get("/review", async (req, res) => {
-    let query = {}
-    if (req.query.email) {
-        query = {
-            email: req.query.email
+    try {
+
+        let query = {}
+        if (req.query.email) {
+            query = {
+                email: req.query.email
+            }
         }
+        const cursor = reviewCollection.find(query)
+        const review = await cursor.toArray()
+        res.send({
+            success: true,
+            message: "Successfully loaded",
+            data: review
+        })
+
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message
+        })
     }
-    const cursor = reviewCollection.find(query)
-    const review = await cursor.toArray()
-    res.send(review)
 })
 
+// create delete review api 
+app.delete("/review/:id", async (req, res) => {
+    try {
 
+        const id = req.params.id
+        const query = { _id: ObjectId(id) }
+        const result = await reviewCollection.deleteOne(query)
+        res.send(result)
+
+    } catch (error) {
+        res.send({
+            error: error.message
+        })
+    }
+})
 
 app.get("/", (req, res) => {
     res.send("App is running")
