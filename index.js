@@ -9,15 +9,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// user law-firm
-// password CaygxDFuDgTrQert
-
-
-
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.b6qirvs.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const servicesCollection = client.db("law-firm").collection("services")
