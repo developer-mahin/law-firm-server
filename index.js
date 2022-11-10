@@ -23,7 +23,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const servicesCollection = client.db("law-firm").collection("services")
 const reviewCollection = client.db("law-firm").collection("review")
 
-function run() {
+async function run() {
     try {
 
     } catch (error) {
@@ -101,12 +101,31 @@ app.get("/allServices/:id", async (req, res) => {
     }
 })
 
+// create add service api
+app.post("/service", async (req, res)=>{
+    try {
+        
+        const query = req.body
+        const service = await servicesCollection.insertOne(query)
+        res.send({
+            success: true, 
+            message: "successfully added service",
+            data: service
+        })
+
+    } catch (error) {
+        res.send({
+            success: false, 
+            error: error.message
+        })
+    }
+})
+
 // Create review
 app.post("/review", async (req, res) => {
     try {
 
         const query = req.body;
-        console.log(query);
         const review = await reviewCollection.insertOne(query)
         res.send({
             success: true,
