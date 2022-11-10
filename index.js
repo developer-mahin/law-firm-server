@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
+const jwt = require('jsonwebtoken');
 
 
 // middleware
@@ -17,6 +18,23 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const servicesCollection = client.db("law-firm").collection("services")
 const reviewCollection = client.db("law-firm").collection("review")
 
+
+function verifyJwt(req, res, next) {
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        return res.status(401).send({ message: "Unauthorized access" })
+    }
+    const token = authHeader.split(' ')[1]
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
+        if (err) {
+            return res.status(403).send({ message: "Forbidden  Access" })
+        }
+        req.decoded = decoded
+        next()
+    })
+
+}
+
 async function run() {
     try {
 
@@ -28,6 +46,13 @@ async function run() {
 }
 
 run();
+
+// jwt token post api
+app.post("/jwt", (req, res) => {
+    const user = req.body
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1m" })
+    res.send({ token })
+})
 
 
 // services api with limit 
@@ -96,20 +121,20 @@ app.get("/allServices/:id", async (req, res) => {
 })
 
 // create add service api
-app.post("/service", async (req, res)=>{
+app.post("/service", async (req, res) => {
     try {
-        
+
         const query = req.body
         const service = await servicesCollection.insertOne(query)
         res.send({
-            success: true, 
+            success: true,
             message: "successfully added service",
             data: service
         })
 
     } catch (error) {
         res.send({
-            success: false, 
+            success: false,
             error: error.message
         })
     }
@@ -158,8 +183,13 @@ app.get("/review/:id", async (req, res) => {
 })
 
 // get specific reviews at the specific email or user 
-app.get("/review", async (req, res) => {
+app.get("/review", verifyJwt, async (req, res) => {
     try {
+
+        const decoded = req.decoded
+        if (decoded.email !== req.query.email) {
+            res.status(401).send({ message: "Unauthorized access" })
+        }
 
         let query = {}
         if (req.query.email) {
@@ -216,7 +246,7 @@ app.patch("/review/:id", async (req, res) => {
 
     } catch (error) {
         res.send({
-            success: false, 
+            success: false,
             error: error.message
         })
     }
