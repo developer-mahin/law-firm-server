@@ -50,7 +50,7 @@ run();
 // jwt token post api
 app.post("/jwt", (req, res) => {
     const user = req.body
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1m" })
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
     res.send({ token })
 })
 
@@ -166,12 +166,12 @@ app.get("/review/:id", async (req, res) => {
 
         const id = req.params.id
         const query = { productId: id }
-        const cursor = await reviewCollection.find(query).toArray()
-
+        const cursor =  reviewCollection.find(query)
+        const result = await cursor.sort({_id: - 1}).toArray()
         res.send({
             success: true,
             message: "Successfully loaded",
-            data: cursor
+            data: result
         })
 
     } catch (error) {
