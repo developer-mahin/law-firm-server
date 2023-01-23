@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Jack Simmons",
+    "img": "https://i.ibb.co/ZHpnw7g/8119741533-06cb5e9882-b-470x376.jpg",
+    "position": "Attorney",
+    "details": "Jack Simmons has completed her LLB (Hons) from University of London in 2011 and LLM in International Trade Law from University of Northumbria, UK in 2013. She has worked in another law firm prior to joining S Hossain & Associates, law firm in Bangladesh. She advises primarily in Energy and power, M&A and general corporate matters.",
+    "specialty": "Civil Law",
+    "degrees": "Attorney",
+    "address": "Office 223, Hall B",
+    "monday_friday": "8.00 - 17.00",
+    "saturday": "9.30-17.30",
+    "sunday": "9.30-15.00"
+  },
+  {
+    "name": "Karen Dawson",
+    "img": "https://i.ibb.co/Vx1BKbx/redhead-business-man-original-3-470x376.jpg",
+    "position": "Attorney",
+    "details": "Karen Dawson Rubel has completed LLB from a University in Bangladesh. His major responsibilities include providing legal opinion to banks and obtaining regulatory approvals such as works in RJSC, IRC, Tax certificates etc. He is also undertaking LLM and training to become a Chartered Accountant.",
+    "specialty": "Civil Law",
+    "degrees": "Attorney",
+    "address": "Office 223, Hall B",
+    "monday_friday": "8.00 - 17.00",
+    "saturday": "9.30-17.30",
+    "sunday": "9.30-15.00"
+  },
+  {
+    "name": "Michael Linden",
+    "img": "https://i.ibb.co/SNdYCLv/blonde-girl-teamlead-original1-470x376.jpg",
+    "position": "Attorney",
+    "details": "LLM (Eastern University) Michael Linden is an Associate. He assists the Managing Partner in drafting, preparing legal opinion and does legal research. He also assists in litigation and family matters.",
+    "specialty": "Civil Law",
+    "degrees": "Attorney",
+    "address": "Office 223, Hall B",
+    "monday_friday": "8.00 - 17.00",
+    "saturday": "9.30-17.30",
+    "sunday": "9.30-15.00"
+  },
+  {
+    "name": "Michael Linden",
+    "img": "https://i.ibb.co/TB1dz42/photodune-6076506-happy-businessman-m-1-470x376.jpg",
+    "position": "Attorney",
+    "details": "Michael Linden has completed her LLB (Hons) from University of Dhaka and LLM (UMSAILS) UAP CIVIL –COMMERCIAL Mediator, ADR-ODR INT’L UK.",
+    "specialty": "Civil Law",
+    "degrees": "Attorney",
+    "address": "Office 223, Hall B",
+    "monday_friday": "8.00 - 17.00",
+    "saturday": "9.30-17.30",
+    "sunday": "9.30-15.00"
+  }
+]

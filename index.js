@@ -17,6 +17,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 const servicesCollection = client.db("law-firm").collection("services")
 const reviewCollection = client.db("law-firm").collection("review")
+const profileCollection = client.db("law-firm").collection("profile")
+const commentCollection = client.db("law-firm").collection("comments")
 
 
 function verifyJwt(req, res, next) {
@@ -166,8 +168,8 @@ app.get("/review/:id", async (req, res) => {
 
         const id = req.params.id
         const query = { productId: id }
-        const cursor =  reviewCollection.find(query)
-        const result = await cursor.sort({_id: - 1}).toArray()
+        const cursor = reviewCollection.find(query)
+        const result = await cursor.sort({ _id: - 1 }).toArray()
         res.send({
             success: true,
             message: "Successfully loaded",
@@ -251,6 +253,24 @@ app.patch("/review/:id", async (req, res) => {
         })
     }
 })
+
+// create get api for getting all team profile 
+app.get("/profile", async (req, res) => {
+    const query = {}
+    const result = await profileCollection.find(query).toArray()
+    res.send(result)
+})
+
+// create get api for getting specific user profile
+app.get("/profile_details/:id", async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) }
+    const result = await profileCollection.findOne(query)
+    res.send(result)
+})
+
+// post method for posting comment
+
 
 app.get("/", (req, res) => {
     res.send("App is running")
