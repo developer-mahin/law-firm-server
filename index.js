@@ -270,6 +270,19 @@ app.get("/profile_details/:id", async (req, res) => {
 })
 
 // post method for posting comment
+app.post("/comment", async (req, res) => {
+    const comment = req.body
+    const result = await commentCollection.insertOne(comment)
+    res.send(result)
+})
+
+// get api for getting specific profile comments 
+app.get("/comments/:id", async (req, res) => {
+    const id = req.params.id;
+    const query = { profileId: id }
+    const result = await commentCollection.find(query).toArray()
+    res.send(result)
+})
 
 
 app.get("/", (req, res) => {
